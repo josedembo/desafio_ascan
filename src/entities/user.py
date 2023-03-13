@@ -1,5 +1,6 @@
 from src.config.database.base import Base
 from sqlalchemy import Column, String, Integer, DateTime, Text
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from src.config.database.connection import DBConnectionHandler
 
@@ -15,6 +16,7 @@ class User(Base):
     email = Column(String(50), nullable=False, unique=True)
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, onupdate=datetime.now())
+    subscription = relationship("Subscription", backref="subscription.id", passive_deletes=True)
     
     def __repr__(self) -> str:
         return f"<<User id: {self.id}, name:{self.full_name}, created_at: {self.created_at}, updated_at: {self.updated_at} >>"
