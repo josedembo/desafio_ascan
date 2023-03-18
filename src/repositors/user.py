@@ -1,5 +1,5 @@
 from src.config.database.connection import DBConnectionHandler
-from src.entities.user import User
+from src.entities.entities import User
 
 
 class UserRepositor:
