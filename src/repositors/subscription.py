@@ -1,8 +1,5 @@
 from src.config.database.connection import DBConnectionHandler
-from src.entities.subscription import Subscription
-from src.entities.user import User
-from src.entities.event_history import EventHistory
-from src.entities.status import Status
+from src.entities.entities import Subscription, Status, EventHistory
 
 
 class SubscriptionRepositor:
