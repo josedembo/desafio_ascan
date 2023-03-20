@@ -1,5 +1,5 @@
 from src.config.database.connection import DBConnectionHandler
-from src.entities.status import Status
+from src.entities.entities import Status
 
 
 
