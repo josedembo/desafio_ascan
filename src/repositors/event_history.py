@@ -1,5 +1,5 @@
 from src.config.database.connection import DBConnectionHandler
-from src.entities.event_history import EventHistory
+from src.entities.entities import EventHistory
 
 
 class EventHistoryReporsitory:
