@@ -2,6 +2,8 @@ from flask import Flask
 from dotenv import load_dotenv
 import os
 from src.resources.auth import auth
+from src.resources.subscription import subscription
+from flask_jwt_extended import JWTManager
 
 load_dotenv()
 
@@ -25,5 +27,9 @@ def create_app(test_config=None):
         })
         
     app.register_blueprint(auth)
+    app.register_blueprint(subscription)
+    
+    #jwt configuration
+    JWTManager(app=app)
         
     return app
