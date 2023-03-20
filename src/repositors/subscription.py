@@ -58,4 +58,9 @@ class SubscriptionRepositor:
                 ).all()
                 
             return subs_data
+        
+    def delete(self, id, user_id): 
+        with DBConnectionHandler() as db:
+            db.session.query(Subscription).filter(Subscription.id==id, Subscription.user_id==user_id).delete()
+            db.session.commit()
                 
