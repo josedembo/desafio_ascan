@@ -1,5 +1,5 @@
 from src.config.database.connection import DBConnectionHandler
-from src.entities.entities import User
+from src.entities.entities import User, Subscription, Status
 
 
 class UserRepositor:
@@ -17,7 +17,19 @@ class UserRepositor:
 
     def getById(self, id:int):
         with DBConnectionHandler() as db:
-            user = db.session.query(User).filter(User.id==id).first()
+            user = db.session.query(User, Subscription, Status)\
+                .join(
+                target=Subscription, onclause=User.id == Subscription.user_id
+                ).join(
+                target=Status, onclause= Subscription.status_id == Status.id
+                ).with_entities(
+                    User.id,
+                    User.username,
+                    User.email,
+                    Subscription.id,
+                    Status.status_name
+                ).filter(User.id== id).first()
+                
             return user
         
     def getByEmail(self, email):

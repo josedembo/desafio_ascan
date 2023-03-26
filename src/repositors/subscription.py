@@ -1,8 +1,5 @@
 from src.config.database.connection import DBConnectionHandler
-from src.entities.subscription import Subscription
-from src.entities.user import User
-from src.entities.event_history import EventHistory
-from src.entities.status import Status
+from src.entities.entities import Subscription, Status, EventHistory
 
 
 class SubscriptionRepositor:
@@ -18,19 +15,30 @@ class SubscriptionRepositor:
             all_subscriptions = db.session.query(Subscription).all()
             return all_subscriptions
     
-    def getById(self, subscription_id):
+    def getById(self, subscription_id, user_id):
         with DBConnectionHandler() as db:
-            subscription = db.session.query(Subscription).filter(Subscription.id==subscription_id).first()
+            subscription = db.session.query(Subscription).filter(Subscription.id==subscription_id, Subscription.user_id==user_id).first()
             return subscription
         
     def getByUserId(self, user_id:int):
         with DBConnectionHandler() as db:
-            subscription = db.session.query(Subscription).filter(Subscription.user_id==user_id).first()
+            subscription = db.session.query(Subscription, Status)\
+                .join(
+                    target=Status, onclause= Subscription.status_id == Status.id
+                )\
+                .with_entities(
+                    Subscription.id,
+                    Subscription.status_id,
+                    Subscription.created_at,
+                    Subscription.updated_at,
+                    Subscription.user_id,
+                    Status.status_name
+                ).filter(Subscription.user_id==user_id).first()
             return subscription
     
-    def updated(self,subsc_id:int, status_id:int):
+    def update(self,subscription_id:int, status_id:int):
         with DBConnectionHandler() as db:
-            db.session.query(Subscription).filter(Subscription.id == subsc_id).update({
+            db.session.query(Subscription).filter(Subscription.id == subscription_id).update({
                 "status_id": status_id
             })
             db.session.commit()
@@ -50,4 +58,9 @@ class SubscriptionRepositor:
                 ).all()
                 
             return subs_data
+        
+    def delete(self, id, user_id): 
+        with DBConnectionHandler() as db:
+            db.session.query(Subscription).filter(Subscription.id==id, Subscription.user_id==user_id).delete()
+            db.session.commit()
                 
