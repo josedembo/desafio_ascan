@@ -22,7 +22,7 @@ class DBConnectionHandler:
         
     
     def __create_engine(self):
-        engine = create_engine(self.__conection_string)
+        engine = create_engine(self.__conection_string, echo=False)
         return engine
     
     def get_engine(self):
