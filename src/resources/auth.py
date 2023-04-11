@@ -106,7 +106,7 @@ def login():
         "id": user.id,
         "email": user.email,
         "username": user.username,
-        "toke": token,
+        "token": token,
         "refresh": refresh
     }), HTTP_200_OK
     
