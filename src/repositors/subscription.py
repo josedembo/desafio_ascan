@@ -9,6 +9,11 @@ class SubscriptionRepositor:
             new_subscription = Subscription(user_id=user_id, status_id=status_id)
             db.session.add(new_subscription)
             db.session.commit()
+            
+    def select_by_userId(self, user_id):
+        with DBConnectionHandler() as db:
+            subscription = db.session.query(Subscription).filter(Subscription.user_id==user_id).first()
+            return subscription
     
     def getAll(self):
         with DBConnectionHandler() as db:
