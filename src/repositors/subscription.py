@@ -27,18 +27,9 @@ class SubscriptionRepositor:
         
     def getByUserId(self, user_id:int):
         with DBConnectionHandler() as db:
-            subscription = db.session.query(Subscription, Status)\
-                .join(
-                    target=Status, onclause= Subscription.status_id == Status.id
-                )\
-                .with_entities(
-                    Subscription.id,
-                    Subscription.status_id,
-                    Subscription.created_at,
-                    Subscription.updated_at,
-                    Subscription.user_id,
-                    Status.status_name
-                ).filter(Subscription.user_id==user_id).first()
+            subscription = db.session.query(Subscription, EventHistory)\
+            .join(target=EventHistory, onclause=Subscription.id==EventHistory.subscription_id)\
+            .filter(Subscription.user_id==user_id).all()
             return subscription
     
     def update(self,subscription_id:int, status_id:int):
