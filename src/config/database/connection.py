@@ -5,12 +5,14 @@ import os
 
 load_dotenv()
 
+DB_HOST = os.environ.get("DB_HOST")
+
 dialect = "mysql"
 driver = "pymysql"
 username = os.environ.get("DB_USERNAME")
 password = os.environ.get("DB_PASSWORD")
 port = os.environ.get("DB_PORT")
-host = "localhost"
+host = DB_HOST
 database = "desafio_ascan"
 
 class DBConnectionHandler:
