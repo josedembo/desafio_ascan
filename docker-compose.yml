@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+
+  mysqldb:
+    container_name: ascandb
+    image: mysql:latest
+    
+    environment:
+      - MYSQL_ROOT_PASSWORD=iMmB6T1ymedxMs72qMpz747S1zX3Ewj5
+      - MYSQL_DATABASE=desafio_ascan
+    volumes:
+      - ./data-db-mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+      
+  ascan_app:
+    container_name: ascan_app
+    build:
+      context: .
+    image: ascan_app:1.0.0
+    environment: 
+      - DB_USERNAME=root
+      - DB_PASSWORD=iMmB6T1ymedxMs72qMpz747S1zX3Ewj5
+      - DB_PORT=3306
+      - EXCHANGE_NAME=ascan_exchange
+      - QUEUE_NAME=ascan_que
+      - ROUTING_KEY=ascan_key
+    ports:
+     - '5000:5000'
+    depends_on: 
+      - mysqldb
+    # healthcheck:
+    #     test: ["CMD", "curl", "-f", "http://localhost:15672"]
+    #     interval: 30s
+    #     timeout: 10s
+    #     retries: 5
+
+  rabbitmq:
+    container_name: rabbit
+    image: rabbitmq:3-management
+    volumes:
+      - ./data_rabbitmq:/var/lib/rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+
