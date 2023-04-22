@@ -100,7 +100,7 @@ def login():
             "Error": "Ivalid credentials"
         }), HTTP_403_FORBIDDEN
         
-    token = create_access_token(identity=user.id)
+    token = create_access_token(identity=user.id, expires_delta=timedelta(hours=2))
     refresh = create_refresh_token(identity=user.id)      
     
     return jsonify({
