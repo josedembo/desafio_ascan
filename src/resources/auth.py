@@ -111,10 +111,21 @@ def login():
         "token": token,
         "refresh": refresh
     }), HTTP_200_OK
-    
+
+# End point for refresh token
+@auth.get("/token/refresh")
+@jwt_required(refresh=True)
+@swag_from("../docs/auth/refresh.yml")
+def refresh_token():
+    id = get_jwt_identity()
+    new_token  = create_access_token(identity=id)
+    return jsonify({
+        "token": new_token
+    }), HTTP_200_OK
     
 @auth.route(rule="/me", methods=["GET"])
 @jwt_required()
+@swag_from("../docs/auth/retrive.yml")
 def get_me():
     id = get_jwt_identity()
     
