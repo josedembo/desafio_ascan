@@ -15,10 +15,13 @@ from flask_jwt_extended import (
     jwt_required
 )
 import validators
+from flasgger import swag_from
+from datetime import timedelta
 
 auth = Blueprint("auth", __name__, url_prefix="/api/v1/auth")
 
 @auth.route(rule="/register", methods=["POST"])
+@swag_from("../docs/auth/register.yml")
 def register():
     email = request.json["email"]
     username = request.json["username"]
@@ -71,10 +74,9 @@ def register():
         }
     }), HTTP_201_CREATED
     
-    
 @auth.route(rule="/login", methods=["POST"])
+@swag_from("../docs/auth/login.yml")
 def login():
-    
     email = request.json["email"]
     password = request.json["password"]
     
