@@ -1,0 +1,15 @@
+Create subscription for a user
+---
+tags: 
+  - Subscription
+parameters:
+  - in: header
+    name: Authorization
+    requierd: true
+
+responses:
+  201:
+    description: "subscription created succecfully"
+
+  401: 
+    description: "Authentication error"

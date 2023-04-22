@@ -8,12 +8,14 @@ from src.constants.http_status_codes import (
 )
 from src.rabbitmq.publisher import Publisher
 import json
+from flasgger import swag_from
 
 subscription = Blueprint("subscription", __name__, url_prefix="/api/v1/user/subscription")
 
 # Create susbcription
 @subscription.post("/")
 @jwt_required()
+@swag_from("../docs/subscription/create.yml")
 def create_subscription():
     id = get_jwt_identity()
     
@@ -53,6 +55,7 @@ def create_subscription():
 # Get my subscription data 
 @subscription.get("/")
 @jwt_required()
+@swag_from("../docs/subscription/retrive.yml")
 def get_my_subscription():
     id = get_jwt_identity()
     
@@ -94,6 +97,7 @@ def get_my_subscription():
 # Update susbcription
 @subscription.route(rule="/", methods=["PUT", "PATCH"])
 @jwt_required()
+@swag_from("../docs/subscription/update.yml")
 def subscription_update():
     user_id = get_jwt_identity()
     sub_repo = SubscriptionRepositor()
@@ -140,6 +144,7 @@ def subscription_update():
 # Delete subscription   
 @subscription.delete("/<id>")
 @jwt_required()
+@swag_from("../docs/subscription/delete.yml")
 def subscription_delete(id):
     user_id = get_jwt_identity()
     sub_repo = SubscriptionRepositor()
