@@ -1,0 +1,25 @@
+Update user 
+---
+
+tags: 
+  - User
+parameters:
+  - in: header
+    name: Authoriaztion
+    required: true
+  - in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "full_name"
+      properties:
+        full_name:
+          type: string
+          example: Harry Potter
+
+responses:
+  200: 
+    description: user data updated succefuly
+  400: 
+    description: bad resquest data entered

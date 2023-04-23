@@ -15,10 +15,13 @@ from flask_jwt_extended import (
     jwt_required
 )
 import validators
+from flasgger import swag_from
+from datetime import timedelta
 
 auth = Blueprint("auth", __name__, url_prefix="/api/v1/auth")
 
 @auth.route(rule="/register", methods=["POST"])
+@swag_from("../docs/auth/register.yml")
 def register():
     email = request.json["email"]
     username = request.json["username"]
@@ -71,10 +74,9 @@ def register():
         }
     }), HTTP_201_CREATED
     
-    
 @auth.route(rule="/login", methods=["POST"])
+@swag_from("../docs/auth/login.yml")
 def login():
-    
     email = request.json["email"]
     password = request.json["password"]
     
@@ -98,7 +100,7 @@ def login():
             "Error": "Ivalid credentials"
         }), HTTP_403_FORBIDDEN
         
-    token = create_access_token(identity=user.id)
+    token = create_access_token(identity=user.id, expires_delta=timedelta(hours=2))
     refresh = create_refresh_token(identity=user.id)      
     
     return jsonify({
@@ -109,10 +111,21 @@ def login():
         "token": token,
         "refresh": refresh
     }), HTTP_200_OK
-    
+
+# End point for refresh token
+@auth.get("/token/refresh")
+@jwt_required(refresh=True)
+@swag_from("../docs/auth/refresh.yml")
+def refresh_token():
+    id = get_jwt_identity()
+    new_token  = create_access_token(identity=id)
+    return jsonify({
+        "token": new_token
+    }), HTTP_200_OK
     
 @auth.route(rule="/me", methods=["GET"])
 @jwt_required()
+@swag_from("../docs/auth/retrive.yml")
 def get_me():
     id = get_jwt_identity()
     

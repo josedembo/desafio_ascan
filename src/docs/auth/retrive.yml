@@ -1,0 +1,16 @@
+Get my data
+---
+
+tags:
+  - User 
+parameters:
+  - name: Authorization
+    in: header
+    required: true
+
+responses:
+  200:
+    description: user data retrived succefully
+
+  401: 
+    description: Authentication error

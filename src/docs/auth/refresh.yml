@@ -1,0 +1,19 @@
+Refresh user token
+---
+tags: 
+  - Authentication
+parameters:
+  - in: header
+    name: Authorization
+    required: true
+
+responses:
+  200:
+    description: ok - get new token sucessfully
+    schema:
+      type: object
+      properties:
+        token:
+          type: text
+          example: <jwt token>
+  

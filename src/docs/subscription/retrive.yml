@@ -1,0 +1,15 @@
+GET my subscription information
+---
+tags: 
+  - Subscription
+parameters:
+  - in: header
+    name: Authorization
+    requierd: true
+
+responses:
+  200:
+    description: "subscription created succecfully"
+
+  400: 
+    description: "Fail to get subscription, bad request data"

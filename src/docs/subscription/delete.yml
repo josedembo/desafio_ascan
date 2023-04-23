@@ -1,0 +1,22 @@
+Delete Subscription for a user
+---
+tags: 
+  - Subscription
+parameters:
+  - in: header
+    name: Authorization
+    requierd: true
+  - in: path 
+    name: id
+    required: true
+    type: integer
+    description: Id for the subscription to delete
+
+responses:
+  200:
+    description: "subscription deleted succecfully"
+  401: 
+    description: "Authentication error"
+  400:
+    description: "fail to get subscription, bad request data"
+  

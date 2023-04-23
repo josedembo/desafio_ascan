@@ -1,0 +1,16 @@
+Update Subscription for a user
+---
+tags: 
+  - Subscription
+parameters:
+  - in: header
+    name: Authorization
+    requierd: true
+
+responses:
+  200:
+    description: "subscription deleted succecfully"
+  401: 
+    description: "Authentication error"
+  400:
+    description: "fail to get subscription, bad request data"

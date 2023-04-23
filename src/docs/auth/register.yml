@@ -1,0 +1,36 @@
+User registation
+---
+tags: 
+  - Authentication
+parameters:
+  - name: body
+    description: The should contain the user registation data
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "email"
+        - "username"
+        - "password"
+        - "full_name"
+      properties:
+        email: 
+          type: "email"
+          example: "user@gmail.com"
+        username: 
+          type: "username"
+          example: "username"
+        password: 
+          type: "string"
+          format: password
+          example: "********"
+        full_name:
+          type: "full_name"
+          example: "super mario"
+
+responses:
+  201: 
+    description: "When user is succesfully registered"
+  400:
+    description: "When user suplies incorret credentials"
