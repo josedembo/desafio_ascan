@@ -6,13 +6,8 @@ do
   sleep 5
 done
 
-echo "pronto para criar as tabalas"
-python -m src.entities.entities
-echo "Tabelas criadas"
-
-# insert data into table status
-python initialize_status_table.py
-echo "tabelas status creiada com dados"
+# run migration
+alembic upgrade head
 
 while ! curl -f http://rabbitmq:15672; do
   echo "waiting for reabbitmq"

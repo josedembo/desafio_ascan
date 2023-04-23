@@ -58,7 +58,7 @@ class EventHistory(Base):
         return f"<<id: {self.id}, subscription_id: {self.subscription_id},type: {self.type}, created_at: {self.created_at}>>"
     
     
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    with DBConnectionHandler() as db:
-        Base.metadata.create_all(db.get_engine())
+#     with DBConnectionHandler() as db:
+#         Base.metadata.create_all(db.get_engine())
