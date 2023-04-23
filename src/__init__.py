@@ -36,8 +36,10 @@ def create_app(test_config=None):
         
     app.register_blueprint(auth)
     app.register_blueprint(subscription)
+    app.register_blueprint(user)
     
     #jwt configuration
     JWTManager(app=app)
+    
         
     return app
