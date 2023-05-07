@@ -5,18 +5,22 @@ tags:
   - User
 parameters:
   - in: header
-    name: Authoriaztion
+    name: Authorization
     required: true
+  - in: path
+    name: id
+    required: true
+    type: integer
+    description: The number of user id to update
   - in: body
+    name: body
     required: true
     schema:
       type: object
-      required:
-        - "full_name"
       properties:
         full_name:
-          type: string
-          example: Harry Potter
+          type: "full_name"
+          example: "Jose dembo"
 
 responses:
   200: 
