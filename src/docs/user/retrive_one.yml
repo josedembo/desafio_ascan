@@ -5,8 +5,14 @@ tags:
   - User
 parameters:
   - in: header
-    name: Authoriaztion
+    name: Authorization
     required: true
+  - in: path
+    name: id
+    required: true
+    type: integer
+    description: user id to retrive 
+
 
 responses:
   200: 
