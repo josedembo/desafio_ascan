@@ -18,9 +18,11 @@ services:
     container_name: ascan_app
     build:
       context: .
-    image: ascan_app:1.0.0
+    image: josedembo/ascan_app:1.1.0
     environment: 
       - DB_USERNAME=root
+      - RABBITMQ_HOST=rabbitmq
+      - DB_HOST=mysqldb
       - DB_PASSWORD=iMmB6T1ymedxMs72qMpz747S1zX3Ewj5
       - DB_PORT=3306
       - EXCHANGE_NAME=ascan_exchange
