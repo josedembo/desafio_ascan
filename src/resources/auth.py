@@ -91,7 +91,7 @@ def login():
     
     if not user:
         return jsonify({
-            "Error", "user not registered"
+            "Error": "user not registered"
         }), HTTP_403_FORBIDDEN
         
         
