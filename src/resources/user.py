@@ -15,7 +15,7 @@ repo = UserRepositor()
 @jwt_required()
 @swag_from("../docs/user/retrive.yml")
 def get_all_users():
-    users = repo.getall()
+    users = repo.select()
     
     data = []
     for user in users:
@@ -39,7 +39,7 @@ def get_all_users():
 @jwt_required()
 @swag_from("../docs/user/retrive_one.yml")
 def get_user(id):
-    user = repo.getById(id)
+    user = repo.select_by_id(id)
     
     if not user:
         return jsonify({
@@ -66,7 +66,7 @@ def get_user(id):
 def update_user(id):
     full_name = request.json["full_name"]
     
-    user = repo.getById(id)
+    user = repo.select_by_id(id)
     if not user:
         return jsonify({
             "Error": "user not exist"
@@ -83,7 +83,7 @@ def update_user(id):
 @jwt_required()
 @swag_from("../docs/user/delete.yml")
 def delete_user(id):
-    user = repo.getById(id=id)
+    user = repo.select_by_id(id=id)
     if not user:
         return jsonify({
             "Error": "invalid user id"
