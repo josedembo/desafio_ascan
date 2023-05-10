@@ -1,4 +1,4 @@
-Delete Subscription for a user
+Get subscription by Id 
 ---
 tags: 
   - Subscription
@@ -14,9 +14,8 @@ parameters:
 
 responses:
   200:
-    description: "subscription deleted suceffully"
+    description: "subscription retrived sucefully"
   401: 
     description: "Authentication error"
   400:
     description: "fail to get subscription, bad request data"
-  

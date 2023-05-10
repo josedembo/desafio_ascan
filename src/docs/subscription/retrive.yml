@@ -1,4 +1,4 @@
-GET my subscription information
+Get all subscriptions data
 ---
 tags: 
   - Subscription
@@ -6,10 +6,15 @@ parameters:
   - in: header
     name: Authorization
     requierd: true
+  - in: query
+    name: status
+    schema:
+      type: integer
+      description: the status of the subscription - 1 for Activa and 2 for Cancelada         
 
 responses:
   200:
-    description: "subscription created succecfully"
+    description: "subscription Retrived succecfully"
 
   400: 
     description: "Fail to get subscription, bad request data"

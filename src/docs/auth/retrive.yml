@@ -2,7 +2,7 @@ Get my data
 ---
 
 tags:
-  - User 
+  - Authentication 
 parameters:
   - name: Authorization
     in: header
