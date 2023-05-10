@@ -18,7 +18,7 @@ services:
     container_name: ascan_app
     build:
       context: .
-    image: josedembo/ascan_app:1.1.0
+    image: josedembo/ascan_app:1.1.1
     environment: 
       - DB_USERNAME=root
       - RABBITMQ_HOST=rabbitmq
