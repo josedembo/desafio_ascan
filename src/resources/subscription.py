@@ -120,13 +120,13 @@ def get_my_subscription(id):
         }), HTTP_200_OK
 
 # Update susbcription
-@subscription.route(rule="/", methods=["PUT", "PATCH"])
+@subscription.route(rule="/<id>", methods=["PUT", "PATCH"])
 @jwt_required()
 @swag_from("../docs/subscription/update.yml")
-def subscription_update():
+def subscription_update(id):
     user_id = get_jwt_identity()
     sub_repo = SubscriptionRepositor()
-    subscription = sub_repo.select_by_userId(user_id=user_id)
+    subscription = sub_repo.select_by_Id(id=id)
     
     if not subscription:
         return jsonify({
