@@ -46,14 +46,14 @@ def register():
         
     user_repo = UserRepositor()
     
-    user = user_repo.getByEmail(email=email)
+    user = user_repo.select_by_email(email=email)
     
     if user:
         return jsonify({
             "Error": "This user credentias is already in use"
         }), HTTP_409_CONFLICT
     
-    user = user_repo.getByUsername(username=username)
+    user = user_repo.select_by_username(username=username)
     
     if user:
         return jsonify({
@@ -87,7 +87,7 @@ def login():
         
     
     user_repo = UserRepositor()
-    user = user_repo.getByEmail(email=email)
+    user = user_repo.select_by_email(email=email)
     
     if not user:
         return jsonify({
@@ -130,7 +130,7 @@ def get_me():
     id = get_jwt_identity()
     
     user_repo = UserRepositor()
-    user = user_repo.getById(id=id)
+    user = user_repo.select_by_id(id=id)
     
     return  jsonify({
         "user":{
