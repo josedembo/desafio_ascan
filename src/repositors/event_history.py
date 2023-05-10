@@ -10,12 +10,12 @@ class EventHistoryReporsitory:
             db.session.add(event)
             db.session.commit()
             
-    def getAll(self) -> list:
+    def select(self) -> list:
         with DBConnectionHandler() as db:
             events = db.session.query(EventHistory).all()
             return events
     
-    def getBySubscriptionId(self, subscription_id:int):
+    def select_by_subscription_id(self, subscription_id:int):
         with DBConnectionHandler() as db:
             event = db.session.query(EventHistory).filter(EventHistory.subscription_id==subscription_id).first()
             return event

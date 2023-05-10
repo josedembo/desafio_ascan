@@ -15,7 +15,7 @@ class UserRepositor:
                 db.session.rollback()
                 raise exception
             
-    def getall(self):
+    def select(self):
         with DBConnectionHandler() as db:
             try:
                 data = db.session.query(User).all()
@@ -24,7 +24,7 @@ class UserRepositor:
                 db.session.rollback()
                 raise ex
 
-    def getById(self, id:int):
+    def select_by_id(self, id:int):
         with DBConnectionHandler() as db:
             try:
                 user = db.session.query(User).filter(User.id==id).first()
@@ -34,7 +34,7 @@ class UserRepositor:
             except Exception as exception:
                 raise exception
         
-    def getByEmail(self, email):
+    def select_by_email(self, email):
         with DBConnectionHandler() as db:
             try:
                 user = db.session.query(User).filter(User.email==email).first()
@@ -45,7 +45,7 @@ class UserRepositor:
                 db.session.rollback()
                 raise ex
         
-    def getByUsername(self, username):
+    def select_by_username(self, username):
         with DBConnectionHandler() as db:
             try:
                 user = db.session.query(User).filter(User.username==username).first()
