@@ -11,7 +11,7 @@ class StatusRepositor:
             db.session.add(status)
             db.session.commit()
     
-    def getAll(self) -> list:
+    def select(self) -> list:
         with DBConnectionHandler() as db:
             status_data = db.session.query(Status).all()
             return status_data
