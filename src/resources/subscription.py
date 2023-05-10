@@ -10,7 +10,7 @@ from src.rabbitmq.publisher import Publisher
 import json
 from flasgger import swag_from
 
-subscription = Blueprint("subscription", __name__, url_prefix="/api/v1/user/subscription")
+subscription = Blueprint("subscription", __name__, url_prefix="/api/v1/subscriptions")
 
 # Create susbcription
 @subscription.post("/")
