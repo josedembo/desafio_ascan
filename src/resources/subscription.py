@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from src.repositors.subscription import SubscriptionRepositor
 from src.constants.http_status_codes import (
@@ -38,7 +38,6 @@ def create_subscription():
     data = {"type":type, "created_at":str(subscription.created_at), "subscription_id":subscription.id}
     publisher = Publisher()
     publisher.send_message(data)
-    print(data)
     
     return jsonify({
         "message": "user subscribed",
@@ -50,17 +49,43 @@ def create_subscription():
             "created_at": subscription.created_at
         }
     })
-    
 
-# Get my subscription data 
+# get all subscription data
 @subscription.get("/")
 @jwt_required()
 @swag_from("../docs/subscription/retrive.yml")
-def get_my_subscription():
-    id = get_jwt_identity()
+def get_all_subscriptions():
+    subs_status = request.args.get("status")
+    sub_repo = SubscriptionRepositor()
+    sub_datas = sub_repo.select() if subs_status == None else sub_repo.select_by_status(status=subs_status)
+    subscriptions = []
+    
+    for data in sub_datas:
+        output = {}
+        sub, status = data
+        
+        output["id"] = sub.id
+        output["user_id"] = sub.user_id
+        output["status"] = status.status_name
+        output["created_at"] = sub.created_at
+        output["updated_at"] = sub.updated_at
+        subscriptions.append(output)
+        
+    return jsonify({
+        "message": "subscriptions retrived",
+        "subscriptions": subscriptions
+    }), HTTP_200_OK
+
+
+# Get my subscription data 
+@subscription.get("/<id>")
+@jwt_required()
+@swag_from("../docs/subscription/retrive_one.yml")
+def get_my_subscription(id):
+    # id = get_jwt_identity()
     
     sub_repo = SubscriptionRepositor()
-    data = sub_repo.getByUserId(user_id=id)
+    data = sub_repo.getById(subscription_id=id)
     subscription = None
     events = []
     
@@ -86,7 +111,7 @@ def get_my_subscription():
         return jsonify({
             "subscription":{
                 "id": subscription.id,
-                "status": subscription.status_id,
+                "status": "Activa" if subscription.status_id == 1 else "Cancelada",
                 "user_id": subscription.user_id,
                 "created_at": subscription.created_at,
                 "updated_at": subscription.updated_at if subscription.updated_at else "not updated yet",
