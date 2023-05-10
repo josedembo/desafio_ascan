@@ -173,7 +173,7 @@ def subscription_update(id):
 def subscription_delete(id):
     user_id = get_jwt_identity()
     sub_repo = SubscriptionRepositor()
-    subscription = sub_repo.getById(subscription_id=id, user_id=user_id)
+    subscription = sub_repo.select_by_id_user(subscription_id=id, user_id=user_id)
     
     if not subscription:
         return jsonify({

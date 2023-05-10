@@ -26,11 +26,11 @@ class SubscriptionRepositor:
                 db.session.rollback()
                 raise ex
     
-    def select_all(self):
+    def select_by_id_user(self, subscription_id, user_id):
         with DBConnectionHandler() as db:
             try:
-                all_subscriptions = db.session.query(Subscription).all()
-                return all_subscriptions
+                subscription = db.session.query(Subscription).filter(Subscription.id == subscription_id, Subscription.user_id == user_id).first()
+                return subscription
             except Exception as ex:
                 db.session.rollback()
                 raise ex
